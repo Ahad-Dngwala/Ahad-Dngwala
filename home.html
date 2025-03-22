@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Labour Management System - Smart Workforce Solutions</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --navy: #091F5C;
+            --royal-blue: #2B4AC4;
+            --medium-blue: #5B7BD7;
+            --light-blue: #A8B8E3;
+            --very-light-blue: #E5EBFF;
+            --white: #FFFFFF;
+            --gradient: linear-gradient(45deg, var(--navy), var(--royal-blue));
+            --soft-gradient: linear-gradient(135deg, var(--very-light-blue) 0%, var(--white) 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        .preloader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--white);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        transition: opacity 0.5 ease;
+    }
+
+    .loader {
+        width: 40px;
+        height: 40px;
+        border: 4px solid #2B4AC4;
+        border-top: 4px solid var(--primary);
+        border-radius: 50%;
+        animation: spin 20s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    .scroll-top {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 40px;
+        height: 40px;
+        background: var(--primary);
+        color: #38e3f0;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 999;
+    }
+
+    .scroll-top.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    @media screen and (max-width: 768px) {
+    [data-aos-delay] {
+    transition-delay: 0 !important;
+    }
+}
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 15px rgba(9, 31, 92, 0.1);
+            padding: 15px 0;
+        }
+
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 24px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-link {
+            color: var(--navy) !important;
+            font-weight: 500;
+            margin: 0 15px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .hero-section {
+            min-height: 100vh;
+            background: var(--soft-gradient);
+            padding-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--gradient);
+            opacity: 0.1;
+        }
+
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            top: -150px;
+            right: -150px;
+            animation: float 15s infinite;
+        }
+
+        .shape-2 {
+            width: 200px;
+            height: 200px;
+            bottom: -100px;
+            left: -100px;
+            animation: float 20s infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(50px, 50px) rotate(90deg); }
+            50% { transform: translate(0, 100px) rotate(180deg); }
+            75% { transform: translate(-50px, 50px) rotate(270deg); }
+        }
+
+        .hero-text {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            color: var(--medium-blue);
+            margin-bottom: 30px;
+        }
+
+        .hero-badge {
+            background: var(--white);
+            color: var(--navy);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            display: inline-block;
+            box-shadow: 0 5px 15px rgba(9, 31, 92, 0.1);
+        }
+
+        .hero-image {
+            max-width: 100%;
+            height: auto;
+            animation: levitate 6s ease-in-out infinite;
+            filter: drop-shadow(0 20px 30px rgba(9, 31, 92, 0.2));
+        }
+
+        @keyframes levitate {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .feature-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(9, 31, 92, 0.05);
+            transition: all 0.3s ease;
+            border: 1px solid var(--very-light-blue);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 0;
+        }
+
+        .feature-card:hover::before {
+            opacity: 0.03;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(9, 31, 92, 0.1);
+            border-color: var(--medium-blue);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--very-light-blue);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            background: var(--gradient);
+        }
+
+        .feature-card:hover .feature-icon i {
+            color: var(--white) !important;
+        }
+
+        .about-section {
+        background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+        padding: 100px 0;
+    }
+
+    .about-title {
+        color: var(--primary-color, #2B4AC4);
+        font-size: 2.5rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .about-subtitle {
+        color: var(--text-color, #666);
+        font-size: 1.2rem;
+        text-align: center;
+        margin-bottom: 50px;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .about-heading {
+        color: var(--primary-color, #2B4AC4);
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 25px;
+    }
+
+    .about-description {
+        color: var(--text-color, #666);
+        line-height: 1.8;
+        margin-bottom: 20px;
+    }
+
+    .feature-item {
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+    }
+
+    .feature-icon {
+        color: var(--accent-color, #00c853);
+        margin-right: 15px;
+        font-size: 1.2rem;
+    }
+
+        .stats-section {
+            background: var(--gradient);
+            padding: 100px 0;
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+
+        .stat-card {
+            text-align: center;
+            padding: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+
+        .testimonial-section {
+            padding: 100px 0;
+            background: var(--soft-gradient);
+            position: relative;
+        }
+
+        .testimonial-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px;
+            box-shadow: 0 10px 30px rgba(9, 31, 92, 0.05);
+            transition: all 0.3s ease;
+            border: 1px solid var(--very-light-blue);
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--medium-blue);
+        }
+
+        .client-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .client-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 15px;
+            object-fit: cover;
+        }
+
+        .client-details h5 {
+            margin: 0;
+            color: var(--navy);
+        }
+
+        .client-details p {
+            margin: 0;
+            color: var(--medium-blue);
+            font-size: 0.9rem;
+        }
+
+        .rating {
+            color: #FFD700;
+            margin: 10px 0;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(9, 31, 92, 0.2);
+        }
+
+        .btn-outline-primary {
+            color: var(--royal-blue);
+            border: 2px solid var(--royal-blue);
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+
+        .btn-outline-primary:hover {
+            background: var(--gradient);
+            border-color: transparent;
+            color: var(--white);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(9, 31, 92, 0.2);
+        }
+
+        .contact-section {
+        padding: 80px 0;
+        background: #f8f9fa;
+    }
+
+    .contact-info {
+        margin-bottom: 30px;
+    }
+
+    .contact-item {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 30px;
+    }
+
+    .icon-box {
+        width: 45px;
+        height: 45px;
+        background: rgba(43, 74, 196, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+    }
+
+    .icon-box i {
+        color: #2B4AC4;
+        font-size: 20px;
+    }
+
+    .info-content h4 {
+        color: #333;
+        font-size: 18px;
+        margin-bottom: 5px;
+    }
+
+    .info-content p {
+        color: #666;
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    .map-container {
+        margin-top: 30px;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+
+    .contact-form {
+        background: #fff;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+
+    .form-control {
+        height: auto;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
+
+    .form-control:focus {
+        border-color: #2B4AC4;
+        box-shadow: none;
+    }
+
+    textarea.form-control {
+        min-height: 250px;
+    }
+
+    .btn-primary {
+        background: #2B4AC4;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background: #1e3aa8;
+        transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+        .contact-form {
+            margin-top: 30px;
+        }
+    }
+
+        footer {
+            background: var(--navy);
+            color: var(--white);
+            padding: 80px 0 30px;
+        }
+
+        .footer-links h4 {
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 15px;
+        }
+
+        .footer-links a {
+            color: var(--white);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            opacity: 0.8;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            padding-left: 5px;
+        }
+
+        .social-links {
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin: 0 5px;
+            transition: all 0.3s ease;
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .social-links a:hover {
+            background: var(--white);
+            color: var(--navy);
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 768px) {
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+            
+            .stat-number {
+                font-size: 2.5rem;
+            }
+            
+            .feature-card {
+                padding: 30px;
+            }
+        }
+
+        about-section {
+            padding: 100px 0;
+            background: #f8f9fa;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-title {
+            font-size: 2.5rem;
+            color: #2B4AC4;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .about-subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1.2rem;
+            margin-bottom: 50px;
+        }
+
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .about-image {
+            flex: 1;
+            position: relative;
+        }
+
+        .about-image img {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 20px;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-heading {
+            font-size: 2rem;
+            color: #2B4AC4;
+            margin-bottom: 20px;
+        }
+
+        .about-description {
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .feature-icon {
+            color: #00c853;
+            margin-right: 10px;
+        }
+
+        .about-goal {
+            margin-top: 30px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        @media (max-width: 768px) {
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .about-image {
+                order: -1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Add this right after your opening <body> tag -->
+<div class="preloader">
+    <div class="loader"></div>
+</div>
+
+<!-- Add this before closing </body> tag -->
+<div class="scroll-top">
+    <i class="fas fa-arrow-up"></i>
+</div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <div class="logo-shape"></div>
+                <span>LMS</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#testimonials">Testimonials</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login.html">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/signup.html">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/form.html">Form</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/adminlogin.html">Admin</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="home">
+        <div class="hero-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+        </div>
+        <div class="container">
+            <div class="row align-items-center min-vh-100">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <div class="hero-text">
+                        <span class="hero-badge">
+                            <i class="fas fa-star me-2"></i>
+                            Smart Workforce Solutions
+                        </span>
+                        <h1>Transform Your Workforce Management</h1>
+                        <p class="typing-text">Empowering Business Growth</p>
+                        <div class="d-flex gap-3">
+                            <a href="#contact" class="btn btn-primary">Get Started</a>
+                            <a href="#features" class="btn btn-outline-primary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <img src="/hero-img2.png" alt="Hero Image" class="hero-image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-5" id="features">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-12" data-aos="fade-up">
+                    <h2 class="display-4 fw-bold">Powerful Features</h2>
+                    <p class="lead text-muted">Everything you need to manage your workforce effectively</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4" data-aos="fade-up">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-users fa-2x" style="color: var(--royal-blue)"></i>
+                        </div>
+                        <h3>Team Management</h3>
+                        <p>Efficiently manage your workforce with advanced tracking and organization tools.</p>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line fa-2x" style="color: var(--royal-blue)"></i>
+                        </div>
+                        <h3>Performance Analytics</h3>
+                        <p>Track and analyze performance metrics with real-time insights.</p>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-clock fa-2x" style="color: var(--royal-blue)"></i>
+                        </div>
+                        <h3>Time Management</h3>
+                        <p>Automated attendance and time tracking system for better efficiency.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-section" id="about">
+        <div class="container">
+            <h2 class="about-title" data-aos="fade-up">ABOUT</h2>
+            <p class="about-subtitle" data-aos="fade-up" data-aos-delay="100">
+                LMS — Transforming Workforce Management with Innovation and Efficiency
+            </p>
+            
+            <div class="about-content">
+                <div class="about-image" data-aos="fade-right" data-aos-delay="200">
+                    <img src="/Flux_Dev_A_vibrant_and_modern_team_illustration_image_for_a_la_1.jpeg" alt="Team Illustration">
+                </div>
+                <div class="about-text" data-aos="fade-left" data-aos-delay="300">
+                    <h3 class="about-heading">Empowering Businesses with Smart and Simple Monitoring Solutions</h3>
+                    <p class="about-description">
+                        Welcome to Labour Management System (LMS), your comprehensive solution for modern workforce management. We understand the challenges businesses face in managing their workforce effectively. Our platform is designed to streamline operations, enhance productivity, and ensure seamless coordination across all levels of your organization.
+                    </p>
+                    <p class="about-description">
+                        At LMS, we believe in the power of efficient management and clear communication. Our system helps businesses track attendance, monitor performance, and manage daily operations with unprecedented ease. By combining cutting-edge technology with user-friendly interfaces, we've created a platform that transforms how businesses handle their workforce management needs.
+                    </p>
+                    <ul class="feature-list">
+                        <li class="feature-item" data-aos="fade-up" data-aos-delay="400">
+                            <i class="fas fa-check-circle feature-icon"></i>
+                            <span>Real-time attendance and performance tracking</span>
+                        </li>
+                        <li class="feature-item" data-aos="fade-up" data-aos-delay="500">
+                            <i class="fas fa-check-circle feature-icon"></i>
+                            <span>Comprehensive team management tools</span>
+                        </li>
+                        <li class="feature-item" data-aos="fade-up" data-aos-delay="600">
+                            <i class="fas fa-check-circle feature-icon"></i>
+                            <span>Seamless communication system</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3" data-aos="fade-up">
+                    <div class="stat-card">
+                        <div class="stat-number">500+</div>
+                        <div>Happy Clients</div>
+                    </div>
+                </div>
+                <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
+                    <div class="stat-card">
+                        <div class="stat-number">95%</div>
+                        <div>Client Satisfaction</div>
+                    </div>
+                </div>
+                <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
+                    <div class="stat-card">
+                        <div class="stat-number">10K+</div>
+                        <div>Workers Managed</div>
+                    </div>
+                </div>
+                <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
+                    <div class="stat-card">
+                        <div class="stat-number">24/7</div>
+                        <div>Support Available</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonial-section" id="testimonials">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-12" data-aos="fade-up">
+                    <h2 class="display-4 fw-bold">Client Testimonials</h2>
+                    <p class="lead text-muted">What our clients say about us</p>
+                </div>
+            </div>
+            <div class="swiper testimonial-slider">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="testimonial-card">
+                            <div class="client-info">
+                                <img src="client1.jpg" alt="Client" class="client-image">
+                                <div class="client-details">
+                                    <h5>John Smith</h5>
+                                    <p>CEO, Tech Solutions</p>
+                                </div>
+                            </div>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p>"The Labour Management System has transformed how we manage our workforce. Highly recommended!"</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="testimonial-card">
+                            <div class="client-info">
+                                <img src="client2.jpg" alt="Client" class="client-image">
+                                <div class="client-details">
+                                    <h5>Sarah Johnson</h5>
+                                    <p>HR Manager, BuildCorp</p>
+                                </div>
+                            </div>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p>"Excellent system for managing large teams. The analytics features are particularly helpful."</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="testimonial-card">
+                            <div class="client-info">
+                                <img src="client3.jpg" alt="Client" class="client-image">
+                                <div class="client-details">
+                                    <h5>Michael Brown</h5>
+                                    <p>Director, Construction Co.</p>
+                                </div>
+                            </div>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <p>"The automated time tracking has saved us countless hours in management time."</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </section>
+
+<!-- Contact Section -->
+<section class="contact-section" id="contact">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="icon-box">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Address</h4>
+                            <p>123 Business Complex, Industrial Area<br>Near City Center, State - 380015, India</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="icon-box">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Call Us</h4>
+                            <p>+91 8141353906</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="icon-box">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Email Us</h4>
+                            <p>info@lms.com</p>
+                        </div>
+                    </div>
+
+                    <div class="map-container">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3671.939666829739!2d72.5446!3d23.0345!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDAyJzA0LjIiTiA3MsKwMzInNDAuNiJF!5e0!3m2!1sen!2sin!4v1635835340000!5m2!1sen!2sin" width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-7">
+                <div class="contact-form">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Your Name">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="email" class="form-control" placeholder="Your Email">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Subject">
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" rows="6" placeholder="Message"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h4>About LMS</h4>
+                    <p>Smart solutions for workforce management, helping businesses grow and succeed.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 mb-4">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 mb-4">
+                    <h4>Services</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Team Management</a></li>
+                        <li><a href="#">Performance Analytics</a></li>
+                        <li><a href="#">Time Management</a></li>
+                        <li><a href="#">Support</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 mb-4">
+                    <h4>Contact Info</h4>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-phone me-2"></i> +1 234 567 890</li>
+                        <li><i class="fas fa-envelope me-2"></i> info@lms.com</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i> 123 Business Street, City</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-12 text-center">
+                    <p class="mb-0">© 2024 Labour Management System. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+        duration: 1000,
+        once: true,
+        offset: 100
+    });
+
+        window.addEventListener('load', function() {
+        document.querySelector('.preloader').style.opacity = '0';
+        setTimeout(() => {
+            document.querySelector('.preloader').style.display = 'none';
+        }, 500);
+    });
+
+     // Scroll to Top
+    window.addEventListener('scroll', function() {
+        const scrollTop = document.querySelector('.scroll-top');
+        if (window.pageYOffset > 300) {
+            scrollTop.classList.add('active');
+        } else {
+            scrollTop.classList.remove('active');
+        }
+    });
+
+    document.querySelector('.scroll-top').addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+
+        // Initialize Swiper
+        const swiper = new Swiper('.testimonial-slider', {
+            slidesPerView: 1,
+            spaceBetween: 30,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true
+            },
+            breakpoints: {
+                768: {
+                    slidesPerView: 2
+                },
+                1024: {
+                    slidesPerView: 3
+                }
+            }
+        });
+
+        // Typing Animation
+        const text = document.querySelector('.typing-text');
+        const words = ['Empowering Business Growth', 'Optimizing Workforce', 'Enhancing Productivity'];
+        let wordIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        function type() {
+            const current = words[wordIndex];
+            if (isDeleting) {
+                text.textContent = current.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                text.textContent = current.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            if (!isDeleting && charIndex === current.length) {
+                setTimeout(() => isDeleting = true, 2000);
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length;
+            }
+
+            const typingSpeed = isDeleting ? 50 : 100;
+            setTimeout(type, typingSpeed);
+        }
+
+        // Start typing animation
+        type();
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+                navbar.style.boxShadow = '0 2px 15px rgba(9, 31, 92, 0.1)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                navbar.style.boxShadow = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

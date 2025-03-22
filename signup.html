@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* @import url('https://fonts.googleapis.com/css2?family=Baloo+Bhai+2:wght@400..800&display=swap'); */
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #A8B8E3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .header-nav {
+            color: antiquewhite;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 15px;
+        }
+
+        .back-btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            background-color: rgb(3, 65, 163);
+            color: var(--primary);
+            text-decoration: none;
+            box-shadow: 0 2px 10px rgba(3, 210, 247, 0.1);
+            transition: all 0.3s ease;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+
+        .back-btn:hover{
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(3, 210, 247, 0.1);
+            background-color: rgb(39, 112, 231);
+            color: var(--white);
+        }
+
+        .main_box {
+            background-color: #2B4AC4;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            width: 900px;
+            height: 500px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2),
+                0px 2px 15px rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+
+
+        }
+        img {
+            width: 480px;
+            height: 500px;
+            border-radius: 8px 0 0 8px;
+        }
+        .form_class {
+            background-color: #fff;
+            width: 400px;
+            border-radius: 0 8px 8px 0;
+            line-height: 2;
+        }
+        h1 {
+            position: relative;
+            top: 10px;
+            text-align: center;
+            font-weight: 600;
+            color: rgb(55 65 81);
+        }
+        h3 {
+            text-align: center;
+            font-weight: 500;
+            color: rgb(55 65 81);
+        }
+        .google-btn img {
+            position: relative;
+            top: 3.55px;
+            width: 17px;
+            height: 17px;
+            margin-right: 5px;
+        }
+        #sign_google {
+            position: relative;
+            box-sizing: border-box;
+            left: 108px;
+            width: 150px;
+            height: 38px;
+            padding: 0 12px;
+            text-align: center;
+            background-color: #fff;
+            border: 1px solid #dadce0;
+            font-family: "Google Sans", arial, sans-serif;
+            font-weight: 600;
+            color: #3c4043;
+            cursor: pointer;
+            font-family: "Google Sans", arial, sans-serif;
+            font-size: 14px;
+            letter-spacing: 0.25px;
+            border-radius: 4px;
+            width: auto;
+        }
+        #sign_google:hover {
+            background-color: #dadce08e;
+        }
+        .or-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            position: relative;
+        }
+        .line1 {
+            flex-grow: 1;
+            height: 0.1px;
+            background-color: #888484b8;
+            margin-left: 48px;
+        }
+        .line2 {
+            flex-grow: 1;
+            height: 0.1px;
+            background-color: #888484b8;
+            margin-right: 48px;
+        }
+        .or {
+            margin: 0 10px;
+            font-size: 15px;
+            white-space: nowrap;
+            color: #3c4043;
+        }
+        .input-container-name {
+            margin: 20px 0;
+            width: 100%;
+        }
+
+        .input_feild {
+            position: relative;
+            left: 33px;
+            width: 300px;
+            margin-bottom: 10px;
+            padding: 12px 15px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: rgba(242, 243, 247, 0.856);
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .input_feild:focus {
+            border-color: #007bff;
+            background-color: #fff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+        }
+        #create_button {
+            position: relative;
+            left: 33px;
+            width: 332px;
+            --tw-text-opacity: 1;
+            color: rgb(255 255 255);
+            border-radius: .30rem;
+            background-color: rgb(0, 71, 185);
+            cursor: pointer;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            padding-top: .5rem;
+            padding-bottom: .5rem;
+            font-weight: 700;
+            font-family: inherit;
+            font-feature-settings: inherit;
+            font-variation-settings: inherit;
+            font-size: 100%;
+            border: none;
+        }
+        #create_button:hover {
+            background-color: rgba(90, 153, 255, 0.886);
+        }
+
+
+        .text-last {
+            position: relative;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 15px;
+        }
+        a {
+            color: #2d8fda;
+            text-decoration: none;
+        }
+/* Popup Overlay (Blur Effect) */
+.popup-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4);
+        display: none;
+        z-index: 1000;
+    }
+
+    /* Popup Box */
+    .popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 350px;
+        padding: 20px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        display: none;
+        z-index: 1001;
+        animation: fadeInUp 0.3s ease-in-out;
+    }
+
+    /* Popup Message */
+    #popupMessage {
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+
+    /* OK Button */
+    .popup-btn {
+        background: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .popup-btn:hover {
+        background: #45a049;
+    }
+
+    /* Animation */
+    @keyframes fadeInUp {
+        from {
+            transform: translate(-50%, -60%);
+            opacity: 0;
+        }
+        to {
+            transform: translate(-50%, -50%);
+            opacity: 1;
+        }
+    }
+    </style>
+</head>
+<body>
+
+    <div class="header-nav">
+        <a href="home.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+    </div>
+
+    <div class="main_box">
+        <div id="img_div">
+            <img src="/privacy-policy-concept-illustration_114360-7853.png">
+        </div>
+        <div class="form_class">
+            <h1>Sign Up</h1>
+            <h3>Create an Account!</h3>
+            <button class="google-btn" id="sign_google">
+                <img src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"
+                    alt="Google Logo">
+                    Sign in with Google
+            </button>
+            <div class="or-container">
+                <div class="line1"></div>
+                <p class="or">or</p>
+                <div class="line2"></div>
+            </div>
+            <div class="input-container">
+                <input type="text" placeholder="Enter Full Name" id="fullName" class="input_feild" name="Full_Name"
+                    required><br>
+            </div>
+            <div class="input-container"></div>
+            <input type="email" placeholder="Email Address" id="email" class="input_feild" name="Email_Address"
+                required><br>
+            <input type="password" placeholder="Password" id="password" class="input_feild" name="password"
+                required><br>
+            <input type="password" placeholder="confirmed Password" id="confirmPassword" class="input_feild"
+                name="confirmed_password" required><br>
+                <button onclick="signUp()" id="create_button">Create an Account</button><br>
+                <p id="message"></p>
+            <p class="text-last">Already have an account? <b><a href="/login.html">Log in</a></b></p>
+        </div>
+    </div>
+
+    <!-- Popup Box -->
+    <div id="popupOverlay" class="popup-overlay" onclick="closePopup()"></div>
+    <div id="popupBox" class="popup">
+        <p id="popupMessage"></p>
+        <button class="popup-btn" onclick="closePopup()">OK</button>
+    </div>
+    
+
+</body>
+
+
+<script type="module">
+    // Firebase SDK import
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, updateProfile, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
+
+    // Your Firebase Configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyCqqvnr1Fn_IeHIAiLHsZQ6FyOffz9acn8",
+        authDomain: "signup-authentication-b4c02.firebaseapp.com",
+        projectId: "signup-authentication-b4c02",
+        storageBucket: "signup-authentication-b4c02.firebasestorage.app",
+        messagingSenderId: "100108714672",
+        appId: "1:100108714672:web:5a57d66fa2129dbae3b175",
+        measurementId: "G-M872QM0E9M"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+
+    function showPopup(message, type) {
+        let popupBox = document.getElementById("popupBox");
+        let popupMessage = document.getElementById("popupMessage");
+        let overlay = document.getElementById("popupOverlay");
+
+        popupMessage.innerText = message;
+        popupBox.style.border = type === "success" ? "3px solid green" : "3px solid red";
+
+        overlay.style.display = "block"; 
+        popupBox.style.display = "block";
+
+        // Auto-close after 2 seconds, then redirect if successful
+        setTimeout(() => {
+            closePopup();
+            if (type === "success") {
+                window.location.href = "home.html"; // ✅ Redirect to Home Page
+            }
+        }, 2000);
+    }
+
+    // Close Popup
+    function closePopup() {
+        document.getElementById("popupOverlay").style.display = "none";
+        document.getElementById("popupBox").style.display = "none";
+    }  
+
+    // Email Validation Function
+    function isValidEmail(email) {
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return emailPattern.test(email);
+    }
+
+    // **Signup Function (Email & Password)**
+    window.signUp = function () {
+        let fullName = document.getElementById("fullName").value.trim();
+        let email = document.getElementById("email").value.trim();
+        let password = document.getElementById("password").value;
+        let confirmPassword = document.getElementById("confirmPassword").value;
+
+        // Email Validation
+        if (!isValidEmail(email)) {
+            showPopup("⚠️ Please enter a valid email address!", "error");
+            return;
+        }
+
+        // Password Match Check
+        if (password !== confirmPassword) {
+            showPopup("⚠️ Passwords do not match!", "error");
+            return;
+        }
+
+        // Create User in Firebase
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+
+                // Update user profile with full name
+                return updateProfile(user, { displayName: fullName }).then(() => {
+                    showPopup("✅ Signup Successful!", "success");
+                });
+            })
+            .catch((error) => {
+                showPopup("⚠️ " + error.message, "error");
+            });
+    };
+
+    // **Google Signup Function**
+    document.getElementById("sign_google").addEventListener("click", function () {
+        googleSignUp();
+    });
+
+    window.googleSignUp = function () {
+        signInWithPopup(auth, provider)
+            .then((result) => {
+                showPopup(`✅ Signed up as ${result.user.displayName}`, "success");
+            })
+            .catch((error) => {
+                showPopup("⚠️ " + error.message, "error");
+            });
+    };
+</script>
+</html>

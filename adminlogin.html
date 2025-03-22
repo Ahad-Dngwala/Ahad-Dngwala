@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMS - Admin Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <style>
+        :root {
+            --primary: #2B4AC4;
+            --secondary: #091F5C;
+            --gradient: linear-gradient(135deg, #2B4AC4 0%, #091F5C 100%);
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gradient);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .header-nav {
+            color: antiquewhite;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 15px;
+        }
+
+        .back-btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            background-color: rgb(0, 225, 255);
+            color: var(--primary);
+            text-decoration: none;
+            box-shadow: 0 2px 10px rgba(14, 14, 14, 0.363);
+            transition: all 0.3s ease;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+
+        .back-btn:hover{
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(14, 14, 14, 0.363);
+            background-color: rgb(113, 162, 241);
+            color: var(--white);
+        }
+
+        .login-container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-header h2 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .login-header img {
+            width: 80px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-group label {
+            color: var(--secondary);
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            padding: 12px 40px 12px 12px;
+            border-radius: 8px;
+            border: 2px solid #e1e1e1;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: none;
+        }
+
+        .input-icon {
+            position: absolute;
+            right: 12px;
+            top: 50px;
+            color: #666;
+        }
+
+        .password-field {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 17px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .password-strength {
+            height: 5px;
+            margin-top: 5px;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .strength-weak { background: #ff4444; }
+        .strength-medium { background: #ffbb33; }
+        .strength-strong { background: #00C851; }
+
+        .btn-login {
+            background: var(--gradient);
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            width: 100%;
+            font-weight: 500;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(43, 74, 196, 0.3);
+        }
+
+        .btn-login:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .alert {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-top: 10px;
+        }
+
+        .forgot-password a {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .login-attempts {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .g-recaptcha {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .mfa-section {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .otp-input {
+            letter-spacing: 15px;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <div class="header-nav">
+        <a href="home.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+    </div>
+
+    <div class="login-container">
+        <div class="login-header">
+            <img src="path/to/your/logo.png" alt="LMS Logo">
+            <h2>Admin Login</h2>
+            <p>Secure access to management dashboard</p>
+        </div>
+
+        <form id="loginForm" onsubmit="return validateLogin(event)">
+            <div class="form-group">
+                <label for="username">Username (admin)</label>
+                <input type="text" class="form-control" id="username" required 
+                       autocomplete="username">
+                <i class="fas fa-user input-icon"></i>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password (Admin@123)</label>
+                <div class="password-field">
+                    <input type="password" class="form-control" id="password" required
+                           autocomplete="current-password" onkeyup="checkPasswordStrength()">
+                    <i class="fas fa-eye password-toggle" onclick="togglePassword()"></i>
+                </div>
+                <div class="password-strength" id="passwordStrength"></div>
+            </div>
+
+            <div class="form-check mb-3">
+                <input type="checkbox" class="form-check-input" id="rememberMe">
+                <label class="form-check-label" for="rememberMe">Remember me</label>
+            </div>
+
+            <div class="g-recaptcha" data-sitekey="your-recaptcha-site-key"></div>
+
+            <div class="mfa-section" id="mfaSection">
+                <label for="otpCode">Enter 2FA Code (123456)</label>
+                <input type="text" class="form-control otp-input" id="otpCode" 
+                       maxlength="6" pattern="\d{6}">
+            </div>
+
+            <button type="submit" class="btn-login" id="loginButton">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </button>
+
+            <div class="forgot-password">
+                <a href="#" onclick="forgotPassword()">Forgot Password?</a>
+            </div>
+
+            <div class="login-attempts" id="loginAttempts"></div>
+            <div class="alert" id="loginAlert"></div>
+        </form>
+    </div>
+
+    <script>
+       const AdminAuth = {
+    credentials: {
+        username: 'admin',
+        password: 'Admin@123',
+        mfaCode: '123456'
+    },
+
+    maxAttempts: 3,
+    lockoutDuration: 15, // minutes
+
+    init() {
+        this.loginForm = document.getElementById('loginForm');
+        this.usernameInput = document.getElementById('username');
+        this.passwordInput = document.getElementById('password');
+        this.mfaInput = document.getElementById('otpCode');
+        this.mfaSection = document.getElementById('mfaSection');
+        this.loginButton = document.getElementById('loginButton');
+        
+        this.setupEventListeners();
+        this.checkPreviousSession();
+    },
+
+    setupEventListeners() {
+        this.loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            this.handleLogin();
+        });
+
+        document.querySelector('.password-toggle').addEventListener('click', () => {
+            this.togglePasswordVisibility();
+        });
+    },
+
+    handleLogin() {
+        if (this.mfaSection.style.display === 'block') {
+            this.validateMFA();
+        } else {
+            this.validateCredentials();
+        }
+    },
+
+    validateCredentials() {
+        const username = this.usernameInput.value;
+        const password = this.passwordInput.value;
+
+        if (username === this.credentials.username && 
+            password === this.credentials.password) {
+            this.showMFA();
+        } else {
+            this.handleFailedAttempt();
+        }
+    },
+
+    validateMFA() {
+        const mfaCode = this.mfaInput.value;
+        
+        if (mfaCode === this.credentials.mfaCode) {
+            this.completeLogin();
+        } else {
+            this.showAlert('Invalid 2FA code', 'error');
+        }
+    },
+
+    showMFA() {
+        this.mfaSection.style.display = 'block';
+        this.loginButton.textContent = 'Verify 2FA';
+        this.mfaInput.focus();
+        this.showAlert('Enter 2FA code', 'info');
+    },
+
+    completeLogin() {
+        localStorage.setItem('adminLoggedIn', 'true');
+        
+        if (document.getElementById('rememberMe').checked) {
+            localStorage.setItem('adminUsername', this.usernameInput.value);
+        }
+
+        this.showAlert('Login successful', 'success');
+        setTimeout(() => {
+            window.location.href = 'admin dashboard.html';
+        }, 1000);
+    },
+
+    handleFailedAttempt() {
+        let attempts = parseInt(localStorage.getItem('loginAttempts') || '0');
+        attempts++;
+        localStorage.setItem('loginAttempts', attempts);
+
+        if (attempts >= this.maxAttempts) {
+            this.lockAccount();
+        } else {
+            const remaining = this.maxAttempts - attempts;
+            this.showAlert(`Invalid credentials. ${remaining} attempts remaining`, 'error');
+        }
+        this.passwordInput.value = '';
+    },
+
+    lockAccount() {
+        const lockUntil = new Date().getTime() + (this.lockoutDuration * 60 * 1000);
+        localStorage.setItem('lockoutUntil', lockUntil);
+        this.showAlert(`Account locked for ${this.lockoutDuration} minutes`, 'error');
+        this.disableForm(true);
+    },
+
+    checkPreviousSession() {
+        const lockoutUntil = localStorage.getItem('lockoutUntil');
+        if (lockoutUntil && new Date().getTime() < parseInt(lockoutUntil)) {
+            this.disableForm(true);
+            const remainingMinutes = Math.ceil((parseInt(lockoutUntil) - new Date().getTime()) / 60000);
+            this.showAlert(`Account locked. Try again in ${remainingMinutes} minutes`, 'error');
+        } else {
+            localStorage.removeItem('lockoutUntil');
+            localStorage.removeItem('loginAttempts');
+            
+            const savedUsername = localStorage.getItem('adminUsername');
+            if (savedUsername) {
+                this.usernameInput.value = savedUsername;
+                document.getElementById('rememberMe').checked = true;
+            }
+        }
+    },
+
+    togglePasswordVisibility() {
+        const type = this.passwordInput.type;
+        this.passwordInput.type = type === 'password' ? 'text' : 'password';
+        
+        const icon = document.querySelector('.password-toggle i');
+        icon.classList.toggle('fa-eye');
+        icon.classList.toggle('fa-eye-slash');
+    },
+
+    showAlert(message, type) {
+        const alert = document.getElementById('loginAlert');
+        alert.className = `alert alert-${type}`;
+        alert.textContent = message;
+        alert.style.display = 'block';
+
+        setTimeout(() => {
+            alert.style.display = 'none';
+        }, 3000);
+    },
+
+    disableForm(disabled) {
+        const inputs = this.loginForm.getElementsByTagName('input');
+        for (let input of inputs) {
+            input.disabled = disabled;
+        }
+        this.loginButton.disabled = disabled;
+    }
+};
+
+document.addEventListener('DOMContentLoaded', () => AdminAuth.init());
+</script>
+</body>
+</html>

@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans&display=swap" rel="stylesheet">
+
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #A8B8E3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .header-nav {
+            color: antiquewhite;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 15px;
+        }
+
+        .back-btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            background-color: rgb(3, 65, 163);
+            color: var(--primary);
+            text-decoration: none;
+            box-shadow: 0 2px 10px rgba(3, 210, 247, 0.1);
+            transition: all 0.3s ease;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+
+        .back-btn:hover{
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(3, 210, 247, 0.1);
+            background-color: rgb(39, 112, 231);
+            color: var(--white);
+        }
+
+        .main_box {
+            background-color: #2B4AC4;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            width: 900px;
+            height: 500px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2),
+                0px 2px 15px rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+
+        }
+
+        img {
+            width: 480px;
+            height: 500px;
+            border-radius: 8px 0 0 8px;
+
+        }
+
+        .form_class {
+            background-color: #fff;
+            width: 400px;
+            border-radius: 0 8px 8px 0;
+            line-height: 2;
+
+        }
+
+        h1 {
+            position: relative;
+            top: 10px;
+            text-align: center;
+            font-weight: 600;
+            color: rgb(55 65 81);
+        }
+
+        h3 {
+            text-align: center;
+            font-weight: 500;
+            color: rgb(55 65 81);
+        }
+
+        .google-btn img {
+            position: relative;
+            top: 3.55px;
+            width: 17px;
+            height: 17px;
+            margin-right: 5px;
+        }
+
+        #sign_google {
+            position: relative;
+            box-sizing: border-box;
+            left: 108px;
+            width: 150px;
+            height: 38px;
+            padding: 0 12px;
+            text-align: center;
+            background-color: #fff;
+            border: 1px solid #dadce0;
+            font-family: "Google Sans", arial, sans-serif;
+            font-weight: 600;
+            color: #3c4043;
+            cursor: pointer;
+            font-family: "Google Sans", arial, sans-serif;
+            font-size: 14px;
+            letter-spacing: 0.25px;
+            border-radius: 4px;
+            width: auto;
+        }
+
+        #sign_google:hover {
+            background-color: #dadce08e;
+        }
+
+        .or-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            position: relative;
+        }
+
+        .line1 {
+            flex-grow: 1;
+            height: 0.1px;
+            background-color: #888484b8;
+            margin-left: 48px;
+        }
+
+        .line2 {
+            flex-grow: 1;
+            height: 0.1px;
+            background-color: #888484b8;
+            margin-right: 48px;
+        }
+
+        .or {
+            margin: 8px 15px;
+            font-size: 12px;
+            white-space: nowrap;
+            color: #3c4043;
+        }
+
+        .input-container-name {
+            margin: 20px 0;
+            width: 100%;
+        }
+
+
+        .input_feild {
+            position: relative;
+            left: 33px;
+            width: 300px;
+            margin-bottom: 10px;
+            padding: 12px 15px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: rgba(242, 243, 247, 0.856);
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+
+        .input_feild:focus {
+            border-color: #007bff;
+            background-color: #fff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+        }
+
+        #create_button {
+            position: relative;
+            margin-top: 100px;
+            left: 33px;
+            width: 332px;
+            --tw-text-opacity: 1;
+            color: rgb(255, 255, 255);
+            border-radius: .30rem;
+            background-color: rgb(0, 71, 185);
+            cursor: pointer;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            padding-top: .5rem;
+            padding-bottom: .5rem;
+            font-weight: 700;
+            font-family: inherit;
+            font-feature-settings: inherit;
+            font-variation-settings: inherit;
+            font-size: 100%;
+            border: none;
+
+        }
+
+        #create_button:hover {
+            background-color: rgba(90, 153, 255, 0.886);
+        }
+
+
+
+        .text-last {
+            position: relative;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 15px;
+        }
+
+        a {
+            color: #2d8fda;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header-nav">
+        <a href="home.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+    </div>
+
+    <div class="main_box">
+        <div id="img_div">
+            <img src="https://img.freepik.com/free-vector/computer-login-concept-illustration_114360-7962.jpg?t=st=1739223072~exp=1739226672~hmac=81f988342a85b7cbe7073d3d3862561e73e02ee63dea41e55516e35b6ad78d1e&w=740">
+        </div>
+        <div class="form_class">
+            <h1>Login</h1>
+            <h3>Welcome back!</h3>
+            <button class="google-btn" id="sign_google"  onclick="googleLogin()">
+                <img src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"
+                    alt="Google Logo" >
+                Sign in with Google
+            </button>
+
+            <div class="or-container">
+                <div class="line1"></div>
+                <p class="or">OR LOGIN WITH EMAIL</p>
+                <div class="line2"></div>
+            </div>
+            <!-- <div class="input-container">
+                <input type="text" placeholder="Enter Full Name" id="name_input" class="input_feild" name="Full_Name"
+                    required><br>
+            </div> -->
+            <div class="input-container"></div>
+            <input type="email" placeholder="Email Address" id="email" class="input_feild" name="Email_Address"
+                required><br>
+            <input type="password" placeholder="Password" id="password" class="input_feild" name="password"
+                required><br>
+            <!-- <input type="password" placeholder="confirmed Password" id="confirmed_password_input" class="input_feild"
+                name="confirmed_password" required><br> -->
+            <input type="button"  onclick="emailLogin()" value="Login" id="create_button" >
+            <p class="text-last">Don't have an account? <b><a href="/signup.html">Sign Up</a></b></p>
+            <p id="message"></p>
+
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+        import { 
+            getAuth, 
+            signInWithEmailAndPassword, 
+            signInWithPopup, 
+            GoogleAuthProvider 
+        } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
+    
+        const firebaseConfig = {
+            apiKey: "AIzaSyCqqvnr1Fn_IeHIAiLHsZQ6FyOffz9acn8",
+            authDomain: "signup-authentication-b4c02.firebaseapp.com",
+            projectId: "signup-authentication-b4c02",
+            storageBucket: "signup-authentication-b4c02.firebasestorage.app",
+            messagingSenderId: "100108714672",
+            appId: "1:100108714672:web:5a57d66fa2129dbae3b175",
+            measurementId: "G-M872QM0E9M"
+        };
+    
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+    
+        // ✅ Email Login Function
+        window.emailLogin = function () {
+            let email = document.getElementById("email").value.trim();
+            let password = document.getElementById("password").value;
+            let message = document.getElementById("message");
+    
+            if (!email || !password) {
+                message.innerHTML = "⚠️ Enter Email & Password!";
+                message.style.color = "red";
+                return;
+            }
+    
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    let user = userCredential.user;
+                    message.innerHTML = "✅ Welcome, " + user.email;
+                    message.style.color = "green";
+    
+                    setTimeout(() => {
+                        window.location.href = "home.html"; 
+                    }, 2000);
+                })
+                .catch((error) => {
+                    message.style.color = "red";
+    
+                    if (error.code === "auth/user-not-found") {
+                        message.innerHTML = "⚠️ No user found! Please sign up first.";
+                    } else if (error.code === "auth/wrong-password") {
+                        message.innerHTML = "⚠️ Incorrect password!";
+                    } else if (error.code === "auth/invalid-email") {
+                        message.innerHTML = "⚠️ Invalid email!";
+                    } else {
+                        message.innerHTML = "⚠️ " + error.message;
+                    }
+                });
+        };
+    
+        // ✅ Google Sign-In Function
+        window.googleSignIn = function () {
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    let user = result.user;
+                    console.log("✅ Google Sign-In Successful:", user);
+                    alert(`✅ Signed in as ${user.displayName}`);
+    
+                    setTimeout(() => {
+                        window.location.href = "home.html"; 
+                    }, 2000);
+                })
+                .catch((error) => {
+                    console.error("❌ Google Sign-In Failed:", error.message);
+                    alert("⚠️ Google Sign-In Failed: " + error.message);
+                });
+        };
+    
+        // ✅ Attach Google Sign-In to Button
+        document.getElementById("sign_google").addEventListener("click", googleSignIn);
+    
+    </script>
+    
+    
+</body>
+
+</html>

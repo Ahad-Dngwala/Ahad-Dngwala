@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMS - Rejected Applications</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+    --primary: #2B4AC4;
+    --secondary: #091F5C;
+    --accent: #00C853;
+    --gradient: linear-gradient(135deg, #2B4AC4 0%, #091F5C 100%);
+    --text-dark: #333;
+    --text-light: #666;
+    --white: #ffffff;
+}
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f8f9fa;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            width: 250px;
+            background: var(--gradient);
+            padding: 20px;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .sidebar-header {
+            color: var(--white);
+            padding: 20px 0;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav-menu {
+            list-style: none;
+            padding: 0;
+            margin-top: 30px;
+        }
+
+        .nav-item {
+            margin-bottom: 10px;
+        }
+
+        .nav-link {
+            color: var(--white);
+            padding: 12px 15px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: rgba(255,255,255,0.1);
+            transform: translateX(5px);
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 30px;
+        }
+
+        .page-header {
+            background: var(--gradient);
+            color: var(--white);
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .rejected-card {
+            background: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .rejected-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            background: var(--gradient);
+            color: var(--white);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-badge {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.875rem;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .info-item {
+            padding: 10px;
+        }
+
+        .info-label {
+            color: var(--text-light);
+            font-size: 0.875rem;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .rejection-reason {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn-action {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-view {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-reconsider {
+            background: var(--secondary);
+            color: var(--white);
+        }
+
+        .filter-section {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--danger);
+            margin: 10px 0;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .logout-btn {
+            position: absolute;
+            bottom: 20px;
+            width: calc(100% - 40px);
+            padding: 12px;
+            background: rgba(255,255,255,0.1);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+    </style>
+</head>
+<body>
+<button class="mobile-toggle d-md-none">
+    <i class="fas fa-bars"></i>
+</button>
+
+<div class="sidebar">
+    <div class="sidebar-header">
+        <h3>LMS Admin</h3>
+    </div>
+    <ul class="nav-menu">
+        <a href="/home.html" class="nav-link">
+            <h4><b>Home</b></h4>
+        </a>
+        <li class="nav-item">
+            <a href="/admin dashboard.html" class="nav-link">
+                <i class="fas fa-tachometer-alt"></i>
+                Dashboard
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="/Applications.html" class="nav-link">
+                <i class="fas fa-users"></i>
+                Applications
+            </a>
+        </li>
+        <li class="nav-item active">
+            <a href="/approve.html" class="nav-link">
+                <i class="fas fa-check-circle"></i>
+                Approved
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link" active>
+                <i class="fas fa-times-circle"></i>
+                Rejected
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="/settings.html" class="nav-link">
+                <i class="fas fa-cog"></i>
+                Settings
+            </a>
+        </li>
+    </ul>
+    <button class="logout-btn">
+        <i class="fas fa-sign-out-alt"></i> Logout
+    </button>
+</div>
+
+    <div class="main-content">
+        <div class="page-header">
+            <h2>Rejected Applications</h2>
+            <p>Review and manage rejected job applications</p>
+        </div>
+
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-value">20</div>
+                <div class="stat-label">Total Rejected</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">8</div>
+                <div class="stat-label">This Month</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">3</div>
+                <div class="stat-label">This Week</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">15%</div>
+                <div class="stat-label">Rejection Rate</div>
+            </div>
+        </div>
+
+        <div class="filter-section">
+            <div class="row">
+                <div class="col-md-3">
+                    <select class="form-control" id="departmentFilter">
+                        <option value="">All Departments</option>
+                        <option value="Construction">Construction</option>
+                        <option value="Manufacturing">Manufacturing</option>
+                        <option value="Logistics">Logistics</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select class="form-control" id="reasonFilter">
+                        <option value="">All Reasons</option>
+                        <option value="experience">Insufficient Experience</option>
+                        <option value="qualification">Unmatched Qualification</option>
+                        <option value="skills">Skill Gap</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="searchInput" placeholder="Search rejected applications...">
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-danger w-100" onclick="exportRejected()">
+                        <i class="fas fa-download"></i> Export
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="rejectedList">
+            <!-- Rejected applications will be loaded here -->
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const RejectedManager = {
+            rejectedApplications: [
+                {
+                    id: 'REJ001',
+                    name: 'Sarah Williams',
+                    department: 'Construction',
+                    position: 'Safety Officer',
+                    rejectionDate: '2024-01-15',
+                    reason: 'Insufficient experience in industrial safety protocols',
+                    experience: '2 years',
+                    requiredExperience: '5 years'
+                },
+                {
+                    id: 'REJ002',
+                    name: 'Michael Brown',
+                    department: 'Manufacturing',
+                    position: 'Quality Manager',
+                    rejectionDate: '2024-01-16',
+                    reason: 'Missing required certifications',
+                    experience: '4 years',
+                    requiredExperience: '6 years'
+                },
+                {
+                    id: 'REJ003',
+                    name: 'Emma Davis',
+                    department: 'Logistics',
+                    position: 'Supply Chain Analyst',
+                    rejectionDate: '2024-01-17',
+                    reason: 'Skills mismatch with position requirements',
+                    experience: '3 years',
+                    requiredExperience: '5 years'
+                }
+            ],
+
+            init() {
+                this.renderRejectedApplications();
+                this.setupEventListeners();
+            },
+
+            setupEventListeners() {
+                $('#departmentFilter, #reasonFilter').on('change', () => this.filterApplications());
+                $('#searchInput').on('input', () => this.filterApplications());
+            },
+
+            renderRejectedApplications() {
+                const container = $('#rejectedList');
+                container.empty();
+
+                this.rejectedApplications.forEach(app => {
+                    container.append(this.createRejectedCard(app));
+                });
+            },
+
+            createRejectedCard(app) {
+                return `
+                    <div class="rejected-card" data-id="${app.id}">
+                        <div class="card-header">
+                            <h5 class="mb-0">${app.name}</h5>
+                            <span class="status-badge">Rejected</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <div class="info-label">Department</div>
+                                    <div class="info-value">${app.department}</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Position</div>
+                                    <div class="info-value">${app.position}</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Experience</div>
+                                    <div class="info-value">${app.experience}</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Required</div>
+                                    <div class="info-value">${app.requiredExperience}</div>
+                                </div>
+                            </div>
+                            <div class="rejection-reason">
+                                <strong>Rejection Reason:</strong>
+                                <p class="mb-0">${app.reason}</p>
+                            </div>
+                            <div class="action-buttons">
+                                <button class="btn-action btn-view" onclick="viewDetails('${app.id}')">
+                                    <i class="fas fa-eye"></i> View Details
+                                </button>
+                                <button class="btn-action btn-reconsider" onclick="reconsiderApplication('${app.id}')">
+                                    <i class="fas fa-redo"></i> Reconsider
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            },
+
+            filterApplications() {
+                const department = $('#departmentFilter').val().toLowerCase();
+                const reason = $('#reasonFilter').val().toLowerCase();
+                const search = $('#searchInput').val().toLowerCase();
+
+                $('.rejected-card').each(function() {
+                    const card = $(this);
+                    const appDepartment = card.find('.info-value').first().text().toLowerCase();
+                    const appReason = card.find('.rejection-reason p').text().toLowerCase();
+                    const appName = card.find('.card-header h5').text().toLowerCase();
+
+                    const departmentMatch = !department || appDepartment.includes(department);
+                    const reasonMatch = !reason || appReason.includes(reason);
+                    const searchMatch = !search || appName.includes(search);
+
+                    card.toggle(departmentMatch && reasonMatch && searchMatch);
+                });
+            }
+        };
+
+        function viewDetails(id) {
+            alert(`Viewing details for rejected application ${id}`);
+        }
+
+        function reconsiderApplication(id) {
+            if(confirm('Are you sure you want to reconsider this application?')) {
+                alert(`Application ${id} marked for reconsideration`);
+            }
+        }
+
+        function exportRejected() {
+            alert('Exporting rejected applications...');
+        }
+
+        // Initialize when document is ready
+        $(document).ready(() => RejectedManager.init());
+    </script>
+</body>
+</html>
